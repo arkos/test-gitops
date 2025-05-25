@@ -22,5 +22,14 @@ spec:
         name: workprofile
         ports:
         - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: workprofile-cm
+        env:
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: workprofile-secret
+              key: DB_PASS
         resources: {}
 status: {}

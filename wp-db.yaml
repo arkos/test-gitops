@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: workprofile-db
+  name: workprofile-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: workprofile-db
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: workprofile-db
+    spec:
+      containers:
+      - image: mysql:9.3.0-oraclelinux9
+        name: mysql
+        resources: {}
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: workprofile-storage
+        - mountPath: /docker-entrypoint-initdb.d/init.sql
+          name: workprofile-initdb
+          subPath: init.sql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: workprofile-secret
+              key: ROOT_DB_PASSWORD
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: workprofile-secret
+              key: DB_PASS
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: workprofile-cm
+              key: DB_NAME
+        - name: MYSQL_USER
+          valueFrom:
+            configMapKeyRef:
+              name: workprofile-cm
+              key: DB_USER
+      volumes:
+      - name: workprofile-storage
+        persistentVolumeClaim:
+          claimName: workprofile-storage
+      - name: workprofile-initdb
+        configMap:
+          name: workprofile-initdb
+status: {}
