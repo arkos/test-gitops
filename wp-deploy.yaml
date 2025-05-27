@@ -24,7 +24,7 @@ spec:
         - containerPort: 8080
         envFrom:
         - configMapRef:
-            name: workprofile-cm
+            name: wp-app-config
         env:
         - name: DB_PASS
           valueFrom:

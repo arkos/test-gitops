@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wp-app-config
+data:
+  DB_HOST: "workprofile-db"
+  DB_NAME: "workprofiledb"
+  DB_USER: "admin"
+  BACKEND: "http://aee9eb2e7de3b4c499ef8878ee46263a-1450051498.ap-south-1.elb.amazonaws.com:8080"
