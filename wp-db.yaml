@@ -28,7 +28,7 @@ spec:
         - mountPath: /var/lib/mysql
           name: workprofile-storage
         - mountPath: /docker-entrypoint-initdb.d/init.sql
-          name: workprofile-initdb
+          name: wp-db-init
           subPath: init.sql
         env:
         - name: MYSQL_ROOT_PASSWORD
