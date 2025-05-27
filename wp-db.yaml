@@ -44,12 +44,12 @@ spec:
         - name: MYSQL_DATABASE
           valueFrom:
             configMapKeyRef:
-              name: workprofile-cm
+              name: wp-app-config
               key: DB_NAME
         - name: MYSQL_USER
           valueFrom:
             configMapKeyRef:
-              name: workprofile-cm
+              name: wp-app-config
               key: DB_USER
       volumes:
       - name: workprofile-storage
