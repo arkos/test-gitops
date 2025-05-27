@@ -6,4 +6,4 @@ data:
   DB_HOST: "workprofile-db"
   DB_NAME: "workprofiledb"
   DB_USER: "admin"
-  BACKEND: "http://a49c8122fa30a44cfa8ed052475901de-402427953.ap-south-1.elb.amazonaws.com:8080"
+  BACKEND: "http://a4e52bad3e9574dcaa302604cf037e31-955307076.ap-south-1.elb.amazonaws.com:8080"
