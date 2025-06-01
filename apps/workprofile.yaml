@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: workprofile
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:arkos/workprofile-k8s.git
+    targetRevision: main
+    path: apps/workprofile
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: workprofile
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
