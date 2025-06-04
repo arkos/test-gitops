@@ -26,6 +26,11 @@ spec:
         - configMapRef:
             name: wp-app-config
         env:
+        - name: BACKEND
+          valueFrom:
+            configMapKeyRef:
+              name: wp-backend-config
+              key: BACKEND
         - name: DB_PASS
           valueFrom:
             secretKeyRef:
