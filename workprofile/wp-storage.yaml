@@ -2,6 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: workprofile-storage
+  namespace: workprofile
 spec:
   storageClassName: ebs-csi-gp3
   accessModes:

@@ -3,16 +3,17 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: workprofile
-  name: workprofile
+    app: workprofile-db
+  name: workprofile-db
+  namespace: workprofile
 spec:
   ports:
-  - name: 8080-8080
-    port: 8080
+  - name: 3306-3306
+    port: 3306
     protocol: TCP
-    targetPort: 8080
+    targetPort: 3306
   selector:
-    app: workprofile
+    app: workprofile-db
   type: ClusterIP
 status:
   loadBalancer: {}

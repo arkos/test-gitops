@@ -5,6 +5,7 @@ metadata:
   labels:
     app: workprofile
   name: workprofile
+  namespace: workprofile
 spec:
   replicas: 1
   selector:
