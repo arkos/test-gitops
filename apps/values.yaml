@@ -9,5 +9,5 @@ spec:
     automated:
       prune: true # Whether ArgoCD should prune resources that are no longer in Git
       selfHeal: true
-      syncOptions: 
-        - CreateNamespace=true
+    syncOptions: 
+      - CreateNamespace=true
