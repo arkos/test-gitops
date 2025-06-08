@@ -4,7 +4,7 @@ metadata:
   name: workprofile
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+  - resources-finalizer.argoproj.io
 spec:
   destination:
     namespace: workprofile
@@ -14,13 +14,13 @@ spec:
     path: workprofile
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
-  {{- if .Values.argocd.syncPolicy.enabled }} # <-- New: Conditional rendering
+  {{- if .Values.spec.syncPolicy.enabled }} # <-- New: Conditional rendering
   syncPolicy:
     automated:
-      prune: {{ .Values.argocd.syncPolicy.automated.prune }}
-      selfHeal: {{ .Values.argocd.syncPolicy.automated.selfHeal }}
-    {{- if .Values.argocd.syncPolicy.syncOptions }} # Optional: if you have sync options
+      prune: {{ .Values.spec.syncPolicy.automated.prune }}
+      selfHeal: {{ .Values.spec.syncPolicy.automated.selfHeal }}
+    {{- if .Values.spec.syncPolicy.syncOptions }} # Optional: if you have sync options
     syncOptions:
-      {{- toYaml .Values.argocd.syncPolicy.syncOptions | nindent 6 }}
+      {{- toYaml .Values.spec.syncPolicy.syncOptions | nindent 6 }}
     {{- end }}
   {{- end }}
