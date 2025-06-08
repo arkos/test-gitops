@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "workprofile.fullname" . }}-config
+  labels:
+    {{- include "workprofile.labels" . | nindent 4 }}
+    app.kubernetes.io/component: app-config
+data:
+  # The DB_HOST should always point to the templated DB Service name within the release
+  DB_HOST: {{ include "workprofile.fullname" . }}-db
+  DB_NAME: {{ .Values.appConfig.dbName | quote }}
+  DB_USER: {{ .Values.appConfig.dbUser | quote }}

@@ -46,7 +46,7 @@ spec:
               protocol: TCP
           envFrom:
             - configMapRef:
-                name: wp-app-config
+                name: {{ include "workprofile.fullname" . }}-config
           env:
             - name: BACKEND
               valueFrom:
@@ -56,7 +56,7 @@ spec:
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:
-                  name: workprofile-secret
+                  name: {{ include "workprofile.fullname" . }}-secret
                   key: DB_PASS
           {{- with .Values.livenessProbe }}
           livenessProbe:

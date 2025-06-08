@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: wp-db-init
+  name: {{ include "workprofile.fullname" . }}-initdb
 data:
   init.sql: |
     -- This SQL script initializes the database and creates a table named 'people'.

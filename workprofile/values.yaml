@@ -128,3 +128,36 @@ persistence:
   accessModes:
     - ReadWriteOnce
   size: 1Gi
+
+db:
+  replicaCount: 1 # Default replica count for the DB deployment
+
+  containerName: mysql # Name for the DB container (e.g., "mysql")
+
+  image:
+    repository: mysql
+    tag: 9.3.0-oraclelinux9 # Specific tag for the database image
+    pullPolicy: IfNotPresent # Default image pull policy for DB
+
+  service:
+    type: ClusterIP
+    name: mysql # Name for the DB container port (e.g., "mysql")
+    port: 3306 # Default container port for the database
+
+
+  # Optional Pod scheduling configurations for the DB deployment
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+
+  # Resources for the DB container. Uncomment and configure as needed.
+  resources: {}
+  #   limits:
+  #     cpu: 500m
+  #     memory: 512Mi
+  #   requests:
+  #     cpu: 250m
+  #     memory: 256Mi
+  appConfig:
+    dbName: "workprofiledb"
+    dbUser: "admin"

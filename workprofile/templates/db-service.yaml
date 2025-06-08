@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "workprofile.fullname" . }}-db
+  labels:
+    {{- include "workprofile.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ include "workprofile.fullname" . }}-db
+spec:
+  type: {{ .Values.db.service.type }} # Make service type configurable (e.g., ClusterIP, NodePort)
+  ports:
+    - port: {{ .Values.db.service.port }} # Configurable service port
+      targetPort: {{ .Values.db.service.name }} 
+      protocol: TCP
+      name: {{ .Values.db.service.name }} # Configurable port name
+  selector:
+    # --- IMPORTANT: Match the unique selector label of the DB Deployment's pods ---
+    app.kubernetes.io/name: {{ include "workprofile.fullname" . }}-db
