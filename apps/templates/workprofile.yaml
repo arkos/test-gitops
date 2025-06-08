@@ -14,3 +14,13 @@ spec:
     path: workprofile
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
+  {{- if .Values.argocd.syncPolicy.enabled }} # <-- New: Conditional rendering
+  syncPolicy:
+    automated:
+      prune: {{ .Values.argocd.syncPolicy.automated.prune }}
+      selfHeal: {{ .Values.argocd.syncPolicy.automated.selfHeal }}
+    {{- if .Values.argocd.syncPolicy.syncOptions }} # Optional: if you have sync options
+    syncOptions:
+      {{- toYaml .Values.argocd.syncPolicy.syncOptions | nindent 6 }}
+    {{- end }}
+  {{- end }}
