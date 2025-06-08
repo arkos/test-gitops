@@ -5,7 +5,6 @@ metadata:
   labels:
     app: workprofile-db
   name: workprofile-db
-  namespace: workprofile
 spec:
   ports:
   - name: 3306-3306

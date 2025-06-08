@@ -121,3 +121,10 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+persistence:
+  enabled: true
+  storageClassName: ebs-csi-gp3
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
