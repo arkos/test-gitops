@@ -48,11 +48,6 @@ spec:
             - configMapRef:
                 name: {{ include "workprofile.fullname" . }}-config
           env:
-            - name: BACKEND
-              valueFrom:
-                configMapKeyRef:
-                  name: wp-backend-config
-                  key: BACKEND
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:

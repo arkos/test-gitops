@@ -64,7 +64,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: "*.ap-south-1.elb.amazonaws.com"
+    - host: "workprofile.zapto.org"
       paths:
         - path: /
           pathType: ImplementationSpecific
