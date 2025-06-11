@@ -9,7 +9,6 @@ metadata:
   name: {{ include "workprofile.fullname" . }}-db
 spec:
   serviceName: {{ .Values.db.service.name }} 
-  {{- if .Values.db.podManagementPolicy }}
   replicas: {{ .Values.db.replicaCount }}
   selector:
     matchLabels:
@@ -83,7 +82,7 @@ spec:
         app.kubernetes.io/name: {{ include "workprofile.fullname" . }}-db
     spec:
       accessModes:
-        {{- toYaml .Values.db.storage.accessModes | nindent 4 }}
+        {{- toYaml .Values.db.storage.accessModes | nindent 8 }}
       resources:
         requests:
           storage: {{ .Values.db.storage.size }} # Define your storage size in values.yaml
