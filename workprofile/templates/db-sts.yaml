@@ -1,0 +1,90 @@
+# templates/db-statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    {{- include "workprofile.labels" . | nindent 4 }}
+    app.kubernetes.io/component: database
+    app.kubernetes.io/name: {{ include "workprofile.fullname" . }}-db
+  name: {{ include "workprofile.fullname" . }}-db
+spec:
+  serviceName: {{ .Values.db.service.name }} 
+  {{- if .Values.db.podManagementPolicy }}
+  replicas: {{ .Values.db.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "workprofile.fullname" . }}-db # Must match template labels
+  template:
+    metadata:
+      labels:
+        {{- include "workprofile.labels" . | nindent 8 }}
+        app.kubernetes.io/component: database
+        app.kubernetes.io/name: {{ include "workprofile.fullname" . }}-db
+    spec:
+      containers:
+      - name: {{ .Values.db.containerName }}
+        image: "{{ .Values.db.image.repository }}:{{ .Values.db.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.db.image.pullPolicy | default "IfNotPresent" }}
+        resources:
+          {{- toYaml .Values.db.resources | nindent 10 }}
+        ports:
+        - containerPort: {{ .Values.db.service.port }}
+          name: {{ .Values.db.service.name }}
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: {{ include "workprofile.fullname" . }}-storage # Reference the volumeClaimTemplate name
+        - mountPath: /docker-entrypoint-initdb.d/init.sql
+          name: {{ include "workprofile.fullname" . }}-initdb
+          subPath: init.sql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "workprofile.fullname" . }}-secret
+              key: ROOT_DB_PASSWORD
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "workprofile.fullname" . }}-secret
+              key: DB_PASS
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: {{ include "workprofile.fullname" . }}-config
+              key: DB_NAME
+        - name: MYSQL_USER
+          valueFrom:
+            configMapKeyRef:
+              name: {{ include "workprofile.fullname" . }}-config
+              key: DB_USER
+      volumes: # Only for volumes that are not managed by volumeClaimTemplates
+      - name: {{ include "workprofile.fullname" . }}-initdb
+        configMap:
+          name: {{ include "workprofile.fullname" . }}-initdb
+      {{- with .Values.db.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.db.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.db.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ include "workprofile.fullname" . }}-storage # This name is used in volumeMounts
+      labels:
+        {{- include "workprofile.labels" . | nindent 8 }}
+        app.kubernetes.io/component: database
+        app.kubernetes.io/name: {{ include "workprofile.fullname" . }}-db
+    spec:
+      accessModes:
+        {{- toYaml .Values.db.storage.accessModes | nindent 4 }}
+      resources:
+        requests:
+          storage: {{ .Values.db.storage.size }} # Define your storage size in values.yaml
+      storageClassName: {{ .Values.db.storage.className }} # Define your storage class name in values.yaml
