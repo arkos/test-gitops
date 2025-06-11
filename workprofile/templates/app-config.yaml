@@ -11,8 +11,8 @@ data:
   DB_NAME: {{ .Values.appConfig.dbName | quote }}
   DB_USER: {{ .Values.appConfig.dbUser | quote }}
   BACKEND: >-
-    {{- if not (empty .Values.ingress.tls) -}}
-    https://{{ .Values.ingress.tls[0].hosts[0] }}
-    {{- else -}}
-    http://{{ .Values.ingress.hosts[0].host }}
-    {{- end -}}
+    {{- if .Values.ingress.tls }}
+    https://{{ (index .Values.ingress.tls 0).hosts | index 0 }}
+    {{- else }}
+    http://{{ (index .Values.ingress.hosts 0).host }}
+    {{- end }}
