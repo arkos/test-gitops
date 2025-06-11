@@ -2,7 +2,7 @@ spec:
   destination:
     server: https://kubernetes.default.svc
   source:
-    repoURL: git@github.com:arkos/workprofile-k8s.git
+    repoURL: git@github.com:arkos/gitops.git
     targetRevision: HEAD
   syncPolicy:
     enabled: true # Set to true to enable automated sync, false to disable it (manual sync)
