@@ -1,19 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: workprofile
+  name: workprofile-prod
   namespace: argocd
   finalizers:
   - resources-finalizer.argoproj.io
 spec:
   destination:
-    namespace: workprofile
+    namespace: workprofile-prod
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
     path: workprofile
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
+  helm:
+    valueFiles:
+      - values.yaml
+      - values-prod.yaml
+    parameters:
+      - name: namespace
+        value: workprofile-prod
   {{- if .Values.spec.syncPolicy.enabled }} # <-- New: Conditional rendering
   syncPolicy:
     automated:
