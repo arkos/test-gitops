@@ -14,7 +14,7 @@ image:
 ingress:
   enabled: true
   hosts:
-    - host: "workprofile-prod.zapto.org"
+    - host: "workprofile.zapto.org"
       paths:
         - path: /
           pathType: ImplementationSpecific
