@@ -9,7 +9,7 @@ image:
   repository: 585008052747.dkr.ecr.ap-south-1.amazonaws.com/dev/workprofile
   # This sets the pull policy for images.
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.0.22"
+  tag: "0.0.23"
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 ingress:
   enabled: true
