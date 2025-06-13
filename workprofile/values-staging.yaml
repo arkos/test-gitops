@@ -14,7 +14,7 @@ image:
 ingress:
   enabled: true
   hosts:
-    - host: "workprofile-staging.zapto.org"
+    - host: "workprofile-staging.duckdns.org"
       paths:
         - path: /
           pathType: ImplementationSpecific
