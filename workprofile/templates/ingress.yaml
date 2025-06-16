@@ -37,7 +37,7 @@ spec:
               service:
                 name: {{ include "workprofile.fullname" $ }}-web
                 port:
-                  number: {{ $.Values.service.port }}
+                  number: {{ $.Values.web.service.port }}
           {{- end }}
     {{- end }}
 {{- end }}
