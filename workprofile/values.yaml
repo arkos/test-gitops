@@ -141,3 +141,14 @@ db:
 appConfig:
   dbName: "workprofiledb"
   dbUser: "admin"
+
+web:
+  replicaCount: 1
+  image:
+    repository: "nginx"
+    pullPolicy: IfNotPresent
+    tag: "1.27.4-alpine"
+
+  service:
+    type: ClusterIP
+    port: 80
