@@ -1,1 +1,0 @@
-# workprofile-k8s
