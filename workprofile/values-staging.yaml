@@ -18,20 +18,6 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
-affinity:
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: tier
-              operator: In
-              values:
-                - application
-tolerations:
-  - key: tier
-    operator: Equal
-    value: application
-    effect: NoSchedule
 
 secrets:
   db:
