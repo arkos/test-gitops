@@ -19,6 +19,22 @@ ingress:
         - path: /
           pathType: ImplementationSpecific
 
+db:
+  replicaCount: 1 # Default replica count for the DB deployment
+  containerName: mysql # Name for the DB container (e.g., "mysql")
+  image:
+    repository: mysql
+    tag: 9.3.0-oraclelinux9 # Specific tag for the database image
+    pullPolicy: IfNotPresent # Default image pull policy for DB
+  service:
+    name: mysql # Name for the DB container port (e.g., "mysql")
+    port: 3306 # Default container port for the database
+  storage:
+    storageClassName: gp2
+    accessModes:
+      - ReadWriteOnce
+    size: 1Gi
+
 secrets:
   db:
     password:
