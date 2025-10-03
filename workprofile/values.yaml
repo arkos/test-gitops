@@ -121,7 +121,7 @@ db:
     name: mysql # Name for the DB container port (e.g., "mysql")
     port: 3306 # Default container port for the database
   storage:
-    storageClassName: ebs-csi-gp3
+    className: ebs-csi-gp3
     accessModes:
       - ReadWriteOnce
     size: 1Gi
