@@ -4,22 +4,34 @@ metadata:
   name: workprofile
   namespace: argocd
 spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
   generators:
     - list:
         elements:
-          - foo: bar
+          - environment: staging
   template:
     metadata:
-      name: 'workprofile-{{.foo}}'
+      name: 'workprofile-{{.environment}}'
     spec:
       destination:
-        namespace: workprofile-{{.foo}}
-        server: https://kubernetes.default.svc
+        namespace: workprofile-{{.environment}}
+        server: {{ .Values.spec.destination.server }}
       project: default
       source:
         path: workprofile
-        repoURL: https://github.com/arkos/test-github.com
-        targetRevision: master
+        repoURL: {{ .Values.spec.source.repoURL }}
+        targetRevision: {{ .Values.spec.source.targetRevision }}
         helm:
           valueFiles:
-            - values-{{.foo}}.yaml
+            - values-{{.environment}}.yaml
+      {{- if .Values.spec.syncPolicy.enabled }} # <-- New: Conditional rendering
+      syncPolicy:
+        automated:
+          prune: {{ .Values.spec.syncPolicy.automated.prune }}
+          selfHeal: {{ .Values.spec.syncPolicy.automated.selfHeal }}
+        {{- if .Values.spec.syncPolicy.syncOptions }} # Optional: if you have sync options
+        syncOptions:
+          {{- toYaml .Values.spec.syncPolicy.syncOptions | nindent 6 }}
+        {{- end }}
+      {{- end }}
