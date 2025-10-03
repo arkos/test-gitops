@@ -1,17 +1,12 @@
 namespaces:
   - workprofile-staging
-  - workprofile-prod
 
 spec:
   destination:
     server: https://kubernetes.default.svc
   source:
-    repoURL: git@github.com:arkos/gitops.git
+    repoURL: git@github.com:arkos/test-gitops.git
     targetRevision: HEAD
   syncPolicy:
-    enabled: true # Set to true to enable automated sync, false to disable it (manual sync)
-    automated:
-      prune: true # Whether ArgoCD should prune resources that are no longer in Git
-      selfHeal: true
     syncOptions: 
       - CreateNamespace=true
