@@ -14,22 +14,12 @@ spec:
     spec:
       destination:
         namespace: workprofile-{{.foo}}
-        server: {{ .Values.spec.destination.server }}
+        server: https://kubernetes.default.svc
       project: default
       source:
         path: workprofile
-        repoURL: {{ .Values.spec.source.repoURL }}
-        targetRevision: {{ .Values.spec.source.targetRevision }}
+        repoURL: https://github.com/arkos/test-github.com
+        targetRevision: master
         helm:
           valueFiles:
             - values-{{.foo}}.yaml
-      {{- if .Values.spec.syncPolicy.enabled }} # <-- New: Conditional rendering
-      syncPolicy:
-        automated:
-          prune: {{ .Values.spec.syncPolicy.automated.prune }}
-          selfHeal: {{ .Values.spec.syncPolicy.automated.selfHeal }}
-        {{- if .Values.spec.syncPolicy.syncOptions }} # Optional: if you have sync options
-        syncOptions:
-          {{- toYaml .Values.spec.syncPolicy.syncOptions | nindent 6 }}
-        {{- end }}
-      {{- end }}
