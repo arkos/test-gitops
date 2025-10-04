@@ -10,19 +10,7 @@ spec:
   - list:
       elements:
         - environment: staging
-          syncPolicy:
-            automated:
-              prune: true
-              selfHeal: true
-            syncOptions:
-              - CreateNamespace=true
         - environment: production
-          syncPolicy:
-            automated: 
-              prune: false
-              selfHeal: true
-            syncOptions:
-              - CreateNamespace=true
   template:
     metadata:
       name: 'workprofile-{{.environment}}'
@@ -38,5 +26,9 @@ spec:
       destination:
         server: https://kubernetes.default.svc
         namespace: workprofile-{{.environment}}
-      syncPolicy:
-        {{- toYaml .syncPolicy | nindent 8 }}
+        syncPolicy:
+          automated: 
+            prune: true
+            selfHeal: true
+          syncOptions:
+            - CreateNamespace=true
